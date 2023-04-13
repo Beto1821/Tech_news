@@ -412,7 +412,7 @@ local: `tech_news/scraper.py`
 
 Para conseguirmos fazer o scrape da página de uma notícia, primeiro precisamos de links para várias páginas de notícias. Estes links estão contidos na página inicial do blog da Trybe (<https://blog.betrybe.com>).
 
-Esta função fará o scrape da página Novidades para obter as URLs das páginas de notícias. Vamos utilizar as ferramentas que aprendemos no curso, como a biblioteca Parsel, para obter os dados que queremos de cada página.
+Esta função fará o scrape da página para obter as URLs das páginas de notícias. Vamos utilizar as ferramentas que aprendemos no curso, como a biblioteca Parsel, para obter os dados que queremos de cada página.
 
 * A função deve receber uma string com o conteúdo HTML da página inicial do blog
 * A função deve fazer o scrape do conteúdo recebido para obter uma lista contendo as URLs das notícias listadas.
