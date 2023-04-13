@@ -99,7 +99,7 @@ def test_scrape_news():
         with open(f"{NOTICIAS_PATH}/{new}") as f:
             sorted_news.append(f.read())
 
-    sorted_all_news = sorted(all_news, key=lambda x: x["url"].split('/')[-2])
+    sorted_all_news = sorted(all_news, key=lambda x: x["url"].split("/")[-2])
     for new, expected in zip(sorted_news, sorted_all_news):
         assert scrape_news(new) == expected
 
