@@ -1,6 +1,7 @@
 import requests
 from parsel import Selector
 from time import sleep
+from tech_news.database import create_news
 
 
 # Requisito 1
@@ -52,8 +53,10 @@ def scrape_news(html_content):
     writer = selector.css('span.author a::text').get()
     # print('DADAMARAVILHA', writer)
     reading_time = selector.css('li.meta-reading-time::text').get()
+
     string_split = reading_time.split()
     number = int(string_split[0])
+
     summary = "".join(
         selector.css('div.entry-content > p:first-of-type ::text').getall()
         ).strip()
@@ -73,4 +76,21 @@ def scrape_news(html_content):
 
 # Requisito 5
 def get_tech_news(amount):
-    """Seu código deve vir aqui"""
+    url = "https://blog.betrybe.com/"
+    news = []
+
+    while len(news) < amount:
+        response = fetch(url)
+        updates = scrape_updates(response)
+
+        for update in updates:
+            res_fetch = fetch(update)
+            news_data = scrape_news(res_fetch)
+            news.append(news_data)
+            if len(news) == amount:
+                break
+
+        url = scrape_next_page_link(response)
+
+    create_news(news)
+    return news
