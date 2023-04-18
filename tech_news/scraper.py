@@ -22,7 +22,7 @@ def fetch(url):
 def scrape_updates(html_content):
     selector = Selector(html_content)
     # > header class"entry-header"> h2 class="entry-title" > a href
-    news_links = selector.css('h2.entry-title a::attr(href)').getall()
+    news_links = selector.css("h2.entry-title a::attr(href)").getall()
     return news_links
 
 
@@ -31,7 +31,7 @@ def scrape_next_page_link(html_content):
     selector = Selector(html_content)
     try:
         # main > div > nav > div class="nav-links" > a.next.page-numbers
-        next_page = selector.css('a.next::attr(href)').get()
+        next_page = selector.css("a.next::attr(href)").get()
         return next_page
     except requests.exceptions.Timeout:
         return None
@@ -46,22 +46,22 @@ def scrape_news(html_content):
     # [attribute=value]	[target="_blank"]
     # Selects all elements with target="_blank"
 
-    url = selector.css('head > link[rel=canonical]::attr(href)').get()
-    title = selector.css('div > h1.entry-title::text').get().strip()
+    url = selector.css("head > link[rel=canonical]::attr(href)").get()
+    title = selector.css("div > h1.entry-title::text").get().strip()
     # print("TITULOOOOO", title)
-    timestamp = selector.css('ul > li.meta-date::text').get()
-    writer = selector.css('span.author a::text').get()
+    timestamp = selector.css("ul > li.meta-date::text").get()
+    writer = selector.css("span.author a::text").get()
     # print('DADAMARAVILHA', writer)
-    reading_time = selector.css('li.meta-reading-time::text').get()
+    reading_time = selector.css("li.meta-reading-time::text").get()
 
     string_split = reading_time.split()
     number = int(string_split[0])
 
     summary = "".join(
-        selector.css('div.entry-content > p:first-of-type ::text').getall()
-        ).strip()
+        selector.css("div.entry-content > p:first-of-type ::text").getall()
+    ).strip()
     # print("SUMARIOOOOO ", summary)
-    category = selector.css('a > span.label::text').get()
+    category = selector.css("a > span.label::text").get()
 
     return {
         "url": url,
@@ -76,6 +76,7 @@ def scrape_news(html_content):
 
 # Requisito 5
 def get_tech_news(amount):
+    # amount = quantidade de noticias
     url = "https://blog.betrybe.com/"
     news = []
 
@@ -91,6 +92,8 @@ def get_tech_news(amount):
                 break
 
         url = scrape_next_page_link(response)
-
+    # para rodar docker no mac:
+    # MacOS: https://docs.mongodb.com/guides/server/install/
+    # create_new adicionando as noticias no mongoDB
     create_news(news)
     return news
