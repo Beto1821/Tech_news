@@ -12,7 +12,7 @@ mock = [
         "title": "Notícia 01",
         "timestamp": "10/10/2022",
         "writer": "João",
-        "reading_time": 4,
+        "reading_time": 5,
         "summary": "Uma notícia legal para alegrar o dia!",
         "category": "Novidades",
     },
@@ -45,7 +45,7 @@ def test_reading_plan_group_news():
     news = ReadingPlanService.group_news_for_available_time(12)
     assert len(news["readable"]) == 1
     assert len(news["unreadable"]) == 1
-    assert news["readable"][0]["unfilled_time"] == 4
+    assert news["readable"][0]["unfilled_time"] == 3
 
     with pytest.raises(ValueError):
         ReadingPlanService.group_news_for_available_time(-28)
