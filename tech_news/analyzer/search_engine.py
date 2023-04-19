@@ -18,9 +18,13 @@ def search_by_title(title):
 # Requisito 8
 def search_by_date(date):
     try:
-        # Converte a data para o formato dd/mm/AAAA
+        # strftime()converte a data para o formato dd/mm/AAAA
         # from ISO format = fromsioformat()
         dt = datetime.fromisoformat(date).strftime("%d/%m/%Y")
+        # Se a data fornecida não estiver em formato ISO válido,
+        #  a função fromisoformat() lançará um ValueError.
+        # Nesse caso, o bloco except capturará a exceção e
+        # lançará outra exceção com a mensagem "Data inválida".
     except ValueError:
         raise ValueError("Data inválida")
 
